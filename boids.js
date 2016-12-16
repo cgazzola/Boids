@@ -47,6 +47,7 @@ function simulationLoop(currentTime) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for(var boid=0; boid < boids.length; boid++){
+        updateBoidPosition(boids[boid]);
         drawBoid(currentTime, boids[boid]);
     }
 
@@ -61,11 +62,47 @@ function boidCreator() {
     var deltaX;
     var deltaY;
 
-    image = boid;
-    x = getRandomInt(1,24) * 32;
-    y = 30;
-    deltaX = 5;
-    deltaY = 5;
+    var number = getRandomInt(1,101);
+
+    if(number < 26){ // boids flying south east
+
+        image = boid;
+        x = getRandomInt(1,47) * 39;
+        y = getRandomInt(1,28) * 36;
+        deltaX = 1;
+        deltaY = 1;
+
+    }
+    else if(number >= 25 && number <51){ // boids flying south west
+
+        image = boid;
+        x = getRandomInt(1,47) * 39;
+        y = getRandomInt(1,28) * 36;
+        deltaX = -1;
+        deltaY = 1;
+    }
+
+    else if(number >= 51 && number < 76){ // boids flying north east
+
+        image = boid;
+        x = getRandomInt(1,47) * 39;
+        y = getRandomInt(1,28) * 36;
+        deltaX = 1;
+        deltaY = -1;
+
+    }
+
+    else{ // boids flying north west
+
+        image = boid;
+        x = getRandomInt(1,47) * 39;
+        y = getRandomInt(1,28) * 36;
+        deltaX = -1;
+        deltaY = -1;
+
+    }
+
+
 
     Boid(image,x,y,deltaX,deltaY);
 
@@ -78,7 +115,6 @@ function generateBoids(numOfBoids) {
     for(var i=0; i<boid_count; i++){
         boidCreator();
     }
-    console.log('created');
 }
 
 function getRandomInt(min, max) { // Returns a random int between min (included) and max (excluded)
@@ -89,9 +125,29 @@ function getRandomInt(min, max) { // Returns a random int between min (included)
 
 }
 
+function updateBoidPosition(boid) {
+    boid.x = boid.x + boid.deltaX;
+    boid.y = boid.y + boid.deltaY;
+    keepBoidInBounds(boid);
+}
+
+keepBoidInBounds = function (boid) { //keeps boids in canvas
+    if( boid.y < 0){
+        boid.y = canvas.height - boid.FRAME_HEIGHT;
+    }
+    else if(boid.y > canvas.height-boid.FRAME_HEIGHT){
+        boid.y = 0;
+    }
+    else if(boid.x < 0){
+        boid.x = canvas.width - boid.FRAME_WIDTH;
+    }
+    if(boid.x > canvas.width-boid.FRAME_WIDTH){
+        boid.x = 0;
+    }
+}
 
 function runGame() {
-    generateBoids(10);
+    generateBoids(80);
     requestAnimationFrame(simulationLoop)
 }
 
