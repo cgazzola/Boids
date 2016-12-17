@@ -2,11 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tile Game</title>
+    <title>Flocking Demo</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        .ui-slider {
+            width: 200px;
+            float:right;
+        }
+
+        #controls{
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
-        <canvas id="canvas" width="1900" height="1050" style="border: 1px solid black">If you can see this, you need a better browser</canvas>
+<canvas id="canvas" width="1000" height="800" style="border: 1px solid black">If you can see this, you need a better browser</canvas>
 
-        <script src="boids.js"></script>
+<div id="controls" class="ui-widget ui-corner-all" style="width: 510px">
+    <span>Distance that butterfly can see neighbor:</span>
+    <div id="slider"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="boids.js"></script>
 </body>
 </html>
